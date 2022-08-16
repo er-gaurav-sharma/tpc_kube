@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: http-ingress
+  namespace: netsec
+  annotations:
+    #nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  # tls:
+  # - hosts:
+  #   - phish.tpcentralodisha.com
+  #   secretName: tpc-tls-secret
+  rules:
+  - host: phish.tpcentralodisha.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: gophish
+            port:
+              number: 3333
+        # defaultBackend:
+        #   service:
+        #     name: test
+        #     port:
+        #       number: 80      
