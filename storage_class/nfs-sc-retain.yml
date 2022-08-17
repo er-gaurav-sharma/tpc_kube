@@ -6,7 +6,7 @@ metadata:
 provisioner: nfs.csi.k8s.io
 parameters:
   server: 172.20.200.67
-  share: /kube_nfs
+  share: /kuber_nfs
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 mountOptions:
