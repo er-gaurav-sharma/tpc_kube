@@ -74,3 +74,30 @@ spec:
     port: 8080
     targetPort: phishing
     #nodePort: 30001
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gophish-nfs-retain
+  namespace: netsec
+spec:
+  storageClassName: nfs-csi-retain
+  accessModes: [ReadWriteMany]
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gophish-nfs-delete
+  namespace: netsec
+spec:
+  storageClassName: nfs-csi-delete
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
