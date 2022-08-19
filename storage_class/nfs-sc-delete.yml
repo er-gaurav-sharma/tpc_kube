@@ -12,4 +12,4 @@ volumeBindingMode: Immediate
 mountOptions:
   #- hard
   - nconnect=8
-  - nfsvers=4.1
+  - nfsvers=3
