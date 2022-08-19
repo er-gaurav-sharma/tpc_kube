@@ -39,6 +39,8 @@ spec:
           mountPath: /opt/gophish/config.json
           readOnly: true
           subPath: config.json
+        - name: nfs-delete
+          mountPath: "/delete"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -51,6 +53,10 @@ spec:
           items:
           - key: config
             path: config.json
+      volumes:
+      - name: nfs-delete
+        persistentVolumeClaim:
+          claimName: gophish-nfs-delete
 
 ---
 apiVersion: v1
