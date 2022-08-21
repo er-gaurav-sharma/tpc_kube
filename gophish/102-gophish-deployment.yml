@@ -31,7 +31,7 @@ spec:
           containerPort: 3333
         - name: phishing
           containerPort: 8080
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         name: gophish
         resources: {}
         volumeMounts:
@@ -39,10 +39,6 @@ spec:
           mountPath: /opt/gophish/config.json
           readOnly: true
           subPath: config.json
-        - name: nfs-delete
-          mountPath: "/delete"
-        - name: nfs-delete
-          mountPath: "/retain"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -55,12 +51,7 @@ spec:
           items:
           - key: config
             path: config.json
-      - name: nfs-delete
-        persistentVolumeClaim:
-          claimName: gophish-nfs-delete
-      - name: nfs-retain
-        persistentVolumeClaim:
-          claimName: gophish-nfs-retain
+          defaultMode: 0400  
 
 ---
 apiVersion: v1
@@ -85,29 +76,3 @@ spec:
     targetPort: phishing
     #nodePort: 30001
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: gophish-nfs-retain
-  namespace: netsec
-spec:
-  storageClassName: nfs-csi-retain
-  accessModes: [ReadWriteMany]
-  resources:
-    requests:
-      storage: 1Gi
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: gophish-nfs-delete
-  namespace: netsec
-spec:
-  storageClassName: nfs-csi-delete
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi

@@ -22,6 +22,16 @@ spec:
             name: gophish
             port:
               number: 3333
+  - host: phishserver.tpcentralodisha.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: gophish
+            port:
+              number: 8080
         # defaultBackend:
         #   service:
         #     name: test
