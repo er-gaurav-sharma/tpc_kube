@@ -35,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: mysql
-        image: mysql:5.7.39-oracle
+        image: mysql:5.7.39-oracle --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         envFrom:
         - secretRef:
             name: mysql-secret
