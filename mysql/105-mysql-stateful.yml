@@ -3,23 +3,23 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-standalone
-  namespace: netsec
+  namespace: netsecdb
 spec:
   clusterIP: None
   selector:
-    app: mysql-standalone 
+    app: mysql-standalone
   ports:
   - name: db
     protocol: TCP
     port: 3306
     targetPort: db
- 
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-standalone
-  namespace: netsec
+  namespace: netsecdb
 spec:
   selector:
     matchLabels:
@@ -38,29 +38,32 @@ spec:
         image: mysql:5.7.39-oracle
         envFrom:
         - secretRef:
-            name: mysql-secret                        
+            name: mysql-secret
         ports:
         - containerPort: 3306
           name: db
-        imagePullPolicy: IfNotPresent  
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: db
           mountPath: /var/lib/mysql
+        - name: config
+          mountPath: /etc/mysql/mysql.conf.d
+          readOnly: true
       volumes:
-      - name: db
-        persistentVolumeClaim:
-          claimName: gophish-nfs-retain
-        
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: gophish-nfs-retain
-  namespace: netsec
-spec:
-  storageClassName: nfs-csi-retain
-  accessModes: [ReadWriteMany]
-  resources:
-    requests:
-      storage: 1Gi
-
+      - name: config
+        configMap:
+          name: mysql-config
+          items:
+          - key: config
+            path: mysql.cnf
+          optional: false
+          defaultMode: 0400
+  volumeClaimTemplates:
+    - metadata:
+        name: db
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "nfs-csi-retain"
+        resources:
+          requests:
+            storage: 1Gi
