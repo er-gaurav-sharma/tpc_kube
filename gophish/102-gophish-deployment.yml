@@ -6,7 +6,7 @@ metadata:
   labels:
     app: gophish
   name: gophish
-  namespace: netsec
+  namespace: netsecapp
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -51,14 +51,14 @@ spec:
           items:
           - key: config
             path: config.json
-          defaultMode: 0400  
+          defaultMode: 0444
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: gophish
-  namespace: netsec
+  namespace: netsecapp
 spec:
   #type: NodePort 
   selector:

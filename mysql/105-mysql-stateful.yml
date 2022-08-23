@@ -57,7 +57,7 @@ spec:
           - key: config
             path: mysql.cnf
           optional: false
-          defaultMode: 0400
+          defaultMode: 0444
   volumeClaimTemplates:
     - metadata:
         name: db

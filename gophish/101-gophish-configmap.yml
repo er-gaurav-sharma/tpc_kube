@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: gophish-config
-  namespace: netsec
+  namespace: netsecapp
 data:
   config: |
     {
@@ -20,7 +20,7 @@ data:
         "key_path": "example.key"
       },
       "db_name": "mysql",
-      "db_path": "gophish:gop_2022@(192.168.101.75:1527)/testodia?charset=utf8&parseTime=True&loc=UTC",
+      "db_path": "phishadmin:tqt4jy!r7usdwYS@(mysql-standalone-0.mysql-standalone.netsecdb.svc.cluster.local:3306)/gophish?charset=utf8&parseTime=True&loc=UTC",
       "migrations_prefix": "db/db_",
       "contact_address": "satyanu chattergy",
       "logging": {
