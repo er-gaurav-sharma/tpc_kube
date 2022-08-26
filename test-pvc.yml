@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gophish-nfs-retain
+  namespace: netsecdb
+spec:
+  storageClassName: nfs-csi-retain
+  accessModes: [ReadWriteMany]
+  resources:
+    requests:
+      storage: 1Gi
